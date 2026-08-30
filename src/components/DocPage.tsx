@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { flatDocIds, getDoc, tree } from '../lib/docs'
 import { renderMarkdown } from '../lib/markdown'
-import { hrefCat, hrefDoc } from '../lib/router'
+import { hrefCat, hrefDoc, hrefShare } from '../lib/router'
 import Breadcrumbs from './Breadcrumbs'
+import { ShareIcon } from './Icons'
 import TreeNav from './TreeNav'
 
 interface TocItem {
@@ -117,6 +118,11 @@ function DocPage({ id }: { id: string }) {
                   #{tag}
                 </a>
               ))}
+            </div>
+            <div className="doc-share-row">
+              <a className="btn btn-sm" href={hrefShare(doc.id)}>
+                <ShareIcon className="h-4 w-4" /> 分享預覽
+              </a>
             </div>
           </header>
           {/* eslint-disable-next-line react/no-danger */}

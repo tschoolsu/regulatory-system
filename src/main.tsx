@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { useRoute, useScrollTopOnNavigate } from './lib/router'
+import { useShareMeta } from './lib/useShareMeta'
 import 'katex/dist/katex.min.css'
 import 'highlight.js/styles/github.css'
 import './index.css'
@@ -11,6 +12,7 @@ import Footer from './components/Footer.tsx'
 function Root() {
   const route = useRoute()
   useScrollTopOnNavigate(route)
+  useShareMeta(route)
   return (
     <div className="app-shell">
       <Header />

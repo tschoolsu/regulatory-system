@@ -49,6 +49,9 @@
 .h-5 {
   height: 1.25rem;
 }
+.h-8 {
+  height: 2rem;
+}
 .w-3 {
   width: 0.75rem;
 }
@@ -60,6 +63,9 @@
 }
 .w-5 {
   width: 1.25rem;
+}
+.w-8 {
+  width: 2rem;
 }
 svg.h-4,
 svg.h-5,
@@ -1108,6 +1114,129 @@ mark {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
+}
+
+.doc-share-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.9rem;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.85rem;
+  border-radius: 1rem;
+  font-size: 0.82rem;
+  box-shadow: 2px 2px 0 0 var(--foreground);
+}
+
+.btn-sm:hover {
+  box-shadow: 3px 3px 0 0 var(--foreground);
+}
+
+/* Share preview page ----------------------------------------------------- */
+
+.share-page {
+  max-width: 56rem;
+}
+
+.share-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.share-head h1 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1.6rem;
+  overflow-wrap: anywhere;
+}
+
+.share-head p {
+  margin: 0;
+}
+
+.share-frame {
+  width: 100%;
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  box-shadow: 6px 6px 0 0 var(--foreground);
+  overflow: hidden;
+}
+
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+
+.share-hint {
+  margin: 0.8rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted-fg);
+}
+
+.share-hint code {
+  padding: 0.1em 0.4em;
+  border-radius: 0.4rem;
+  border: 1.5px solid var(--input);
+  background: var(--muted);
+  font-size: 0.82em;
+}
+
+.share-meta {
+  margin-top: 2rem;
+  padding: 1.3rem 1.4rem;
+  border-radius: var(--r-card);
+  border: 2px solid var(--foreground);
+  background: var(--card);
+  box-shadow: 4px 4px 0 0 var(--foreground);
+}
+
+.share-meta h2 {
+  margin: 0 0 0.9rem;
+  font-size: 1.15rem;
+}
+
+.share-meta-list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.share-meta-list > div {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: baseline;
+}
+
+.share-meta-list dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-fg);
+}
+
+.share-meta-list dd {
+  margin: 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.share-meta > p {
+  margin: 1rem 0 0;
+}
+
+.share-meta > p a {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 3px;
 }
 
 .doc-pager {

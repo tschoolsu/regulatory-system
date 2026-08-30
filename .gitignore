@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# 建置時產生的 Open Graph 預覽圖與字型快取
+public/og
+scripts/.fonts
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
