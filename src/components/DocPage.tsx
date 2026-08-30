@@ -15,6 +15,7 @@ function DocPage({ id }: { id: string }) {
   const doc = getDoc(id)
   const [html, setHtml] = useState('')
   const [headings, setHeadings] = useState<TocItem[]>([])
+  const [sideCollapsed, setSideCollapsed] = useState(false)
   const articleRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -89,10 +90,20 @@ function DocPage({ id }: { id: string }) {
         <TreeNav nodes={tree} activeId={doc.id} />
       </details>
 
-      <div className="doc-layout">
-        <aside className="doc-side">
-          <p className="side-title">全部法規</p>
-          <TreeNav nodes={tree} activeId={doc.id} />
+      <div className={`doc-layout${sideCollapsed ? ' doc-layout-side-collapsed' : ''}`}>
+        <aside className={`doc-side${sideCollapsed ? ' is-collapsed' : ''}`}>
+          <button
+            type="button"
+            className="side-toggle"
+            aria-expanded={!sideCollapsed}
+            onClick={() => setSideCollapsed((collapsed) => !collapsed)}
+          >
+            <span className="side-title">全部法規</span>
+            <span className="side-toggle-icon" aria-hidden="true">
+              {sideCollapsed ? '›' : '‹'}
+            </span>
+          </button>
+          {!sideCollapsed && <TreeNav nodes={tree} activeId={doc.id} />}
         </aside>
 
         <article className="doc-main" ref={articleRef}>

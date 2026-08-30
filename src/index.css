@@ -840,6 +840,63 @@ mark {
   }
 }
 
+@media (min-width: 1024px) {
+  .doc-layout-side-collapsed {
+    grid-template-columns: 3.25rem minmax(0, 1fr) 13rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .doc-layout-side-collapsed {
+    grid-template-columns: 3.25rem minmax(0, 1fr) 14rem;
+  }
+}
+
+.doc-side.is-collapsed {
+  padding: 0;
+  align-self: start;
+}
+
+.side-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.doc-side.is-collapsed .side-toggle {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.7rem 0.3rem;
+}
+
+.doc-side.is-collapsed .side-toggle .side-title {
+  writing-mode: vertical-rl;
+  margin: 0;
+}
+
+.side-toggle-icon {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--muted-fg);
+  transition: transform 0.15s ease;
+}
+
+.doc-side.is-collapsed .side-toggle-icon {
+  transform: rotate(180deg);
+}
+
 .doc-mobile-nav {
   margin-bottom: 1rem;
   border-radius: var(--r-icon);
