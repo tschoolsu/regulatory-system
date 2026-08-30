@@ -1,16 +1,22 @@
 # 法規系統
 
-臺北市數位實驗高級中等學校第五屆學生會 法規系統 — 純前端、可部屬到 GitHub Pages 的法規查閱網站。風格遵循 [T-Pass Design System](https://github.com/tschoolsu/regulatory-system)（Playful Tech / Bright Pop Tech）。
+臺北市數位實驗高級中等學校第五屆學生會 法規系統 — 純前端、部署在 GitHub Pages 的法規查閱網站，
+是 [T-Pass](https://github.com/tschoolsu) 生態系裡的公開服務（`law.tschoolsu.org`，不接 SSO）。
+風格遵循 [T-Pass Design System](https://github.com/tschoolsu/tpass-portal/blob/main/docs/design.md)
+（Playful Tech / Bright Pop Tech），UI 元件吃共用套件
+[`tpass-ui`](https://github.com/tschoolsu/tpass-ui)。
 
 > 如何新增法規、本機開發與發布：請見 **[使用說明書](使用說明書.md)**。
+> 生態系地圖、跨服務規範：請見上層 [`tpass-ops`](https://github.com/tschoolsu/tpass-ops) 的
+> `AGENTS.md`。
 
 ## 快速開始
 
 ```bash
-npm install
-npm run dev      # 本地開發
-npm run build    # 產出 dist/
-npm run preview  # 預覽建置結果
+pnpm install
+pnpm dev      # 本地開發
+pnpm build    # 產出 dist/
+pnpm preview  # 預覽建置結果
 ```
 
 ## 如何新增 / 修訂法規
@@ -59,17 +65,22 @@ author: 學生會權益部   # 選填
 
 ## 部屬到 GitHub Pages
 
-倉庫已附 GitHub Actions workflow（`.github/workflows/deploy.yml`）。
+倉庫已附 GitHub Actions workflow（`.github/workflows/deploy.yml`），用 pnpm。
 
-1. 在 GitHub 的 **Settings → Pages → Build and deployment** 選擇 **Source: GitHub Actions**
-2. push 到 `main` 分支，Actions 會自動 `npm run build` 並發布 `dist/`
-3. 站台網址：`https://<username>.github.io/<repo>/`
+1. 在 GitHub 的 **Settings → Pages → Build and deployment** 選擇 **Source: GitHub Actions**，
+   Custom domain 填 `law.tschoolsu.org`（`public/CNAME` 已內建這個網域，Vite 會原樣複製進 `dist/`）
+2. push 到 `main` 分支，Actions 會自動 lint + `pnpm build` 並發布 `dist/`
+3. 站台網址：`https://law.tschoolsu.org`（DNS 由 Cloudflare CNAME 指到 GitHub Pages，
+   細節見 `tpass-registry/services.json` 裡 `law` 這條的 `note`）
 
-因為使用 `base: './'` 與 hash 路由，部署在任意子路徑都能直接使用，不需額外設定。
+因為使用 `base: './'` 與 hash 路由，就算之後改回不掛自訂網域、退回 `<username>.github.io/<repo>/`
+這種子路徑，也不需要額外設定。
 
 ## 技術
 
 - Vite + React 19 + TypeScript
 - unified / remark / rehype 管線處理 Markdown（GFM、KaTeX、highlight.js、Mermaid）
-- OKLCH 色票、純 light 模式、neobrutalism 樣式，全部自訂 CSS（無 Tailwind 依賴）
+- Tailwind CSS v4 + [`tpass-ui`](https://github.com/tschoolsu/tpass-ui)：OKLCH 色票、純 light
+  模式、neobrutalism 樣式；`src/index.css` 只保留 markdown 渲染出的內容
+  （`.prose-md`/`.callout`）跟樹狀導覽這類 Tailwind 掃不到、或用 utility 表達反而更難讀的部分
 - `import.meta.glob` 在建置時期抓取 `regulations/**/*.md`，無需後端

@@ -3,6 +3,7 @@ import { flatDocIds, getDoc, tree } from '../lib/docs'
 import { renderMarkdown } from '../lib/markdown'
 import { hrefCat, hrefDoc } from '../lib/router'
 import Breadcrumbs from './Breadcrumbs'
+import LinkButton from './LinkButton'
 import TreeNav from './TreeNav'
 
 interface TocItem {
@@ -62,14 +63,14 @@ function DocPage({ id }: { id: string }) {
 
   if (!doc) {
     return (
-      <div className="container section">
-        <div className="notfound-card">
-          <span className="tag tag-rose">404</span>
-          <h1>找不到這份法規</h1>
-          <p className="muted">路徑「{id}」不存在，可能已被修訂或移除。</p>
-          <a className="btn btn-primary" href="#/">
-            回首頁
-          </a>
+      <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+        <div className="mx-auto flex max-w-[30rem] flex-col items-center gap-3 rounded-2xl border-2 border-foreground bg-card p-9 text-center shadow-[4px_4px_0_0_var(--color-destructive)]">
+          <span className="rounded-md border-2 border-foreground bg-tone-rose-bg px-2 py-0.5 font-mono text-[11px] font-bold text-tone-rose-text">
+            404
+          </span>
+          <h1 className="m-0">找不到這份法規</h1>
+          <p className="m-0 text-sm text-muted-foreground">路徑「{id}」不存在，可能已被修訂或移除。</p>
+          <LinkButton href="#/">回首頁</LinkButton>
         </div>
       </div>
     )
@@ -81,28 +82,40 @@ function DocPage({ id }: { id: string }) {
   const next = position >= 0 && position < ids.length - 1 ? getDoc(ids[position + 1]) : undefined
 
   return (
-    <div className="container section">
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
       <Breadcrumbs path={doc.categories} current={doc.title} />
 
-      <details className="doc-mobile-nav">
-        <summary>法規目錄</summary>
-        <TreeNav nodes={tree} activeId={doc.id} />
+      <details className="doc-mobile-nav mb-4 overflow-hidden rounded-xl border-2 border-foreground bg-card shadow-[3px_3px_0_0_var(--color-foreground)] lg:hidden">
+        <summary className="cursor-pointer list-none px-4 py-2.5 font-extrabold select-none">法規目錄</summary>
+        <div className="px-4 pb-3">
+          <TreeNav nodes={tree} activeId={doc.id} />
+        </div>
       </details>
 
-      <div className="doc-layout">
-        <aside className="doc-side">
-          <p className="side-title">全部法規</p>
+      <div className="mt-1 grid grid-cols-1 items-start gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_13rem] xl:grid-cols-[17.5rem_minmax(0,1fr)_14rem]">
+        <aside className="sticky top-20 hidden max-h-[calc(100vh-6.5rem)] overflow-y-auto lg:block">
+          <p className="m-0 mb-2 font-mono text-xs font-bold tracking-wider text-muted-foreground uppercase">全部法規</p>
           <TreeNav nodes={tree} activeId={doc.id} />
         </aside>
 
-        <article className="doc-main" ref={articleRef}>
-          <header className="doc-header">
-            <h1>{doc.title}</h1>
-            <div className="doc-meta">
-              <span className="tag tag-green">revision {doc.revision !== '' ? doc.revision : '未標記'}</span>
-              {doc.author !== undefined && <span className="tag">{doc.author}</span>}
+        <article ref={articleRef}>
+          <header className="mb-5 border-b-2 border-dashed border-foreground/30 pb-4">
+            <h1 className="m-0 mb-2.5 text-[clamp(1.6rem,4vw,2.2rem)]">{doc.title}</h1>
+            <p className="m-0 mb-2 font-mono text-xs text-muted-foreground">
+              revision {doc.revision !== '' ? doc.revision : '未標記'}
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {doc.author !== undefined && (
+                <span className="rounded-md border-2 border-foreground bg-card px-2 py-0.5 font-mono text-[11px] font-bold text-foreground">
+                  {doc.author}
+                </span>
+              )}
               {doc.tags.map((tag) => (
-                <a key={tag} className="tag tag-accent" href={`#/search?q=${encodeURIComponent(tag)}`}>
+                <a
+                  key={tag}
+                  className="rounded-md border-2 border-foreground bg-[color-mix(in_oklch,var(--color-accent)_12%,var(--color-card))] px-2 py-0.5 font-mono text-[11px] font-bold text-accent"
+                  href={`#/search?q=${encodeURIComponent(tag)}`}
+                >
                   #{tag}
                 </a>
               ))}
@@ -111,18 +124,24 @@ function DocPage({ id }: { id: string }) {
           {/* eslint-disable-next-line react/no-danger */}
           <div className="prose-md" dangerouslySetInnerHTML={{ __html: html }} />
 
-          <nav className="doc-pager">
+          <nav className="mt-9 grid grid-cols-2 gap-3.5">
             {prev ? (
-              <a className="pager-link pager-prev" href={hrefDoc(prev.id)}>
-                <span className="muted small">← 上一篇</span>
+              <a
+                className="flex flex-col gap-0.5 overflow-hidden rounded-xl border-2 border-foreground bg-card p-3.5 shadow-[2px_2px_0_0_var(--color-foreground)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_var(--color-foreground)]"
+                href={hrefDoc(prev.id)}
+              >
+                <span className="text-sm text-muted-foreground">← 上一篇</span>
                 <strong>{prev.title}</strong>
               </a>
             ) : (
               <span />
             )}
             {next ? (
-              <a className="pager-link pager-next" href={hrefDoc(next.id)}>
-                <span className="muted small">下一篇 →</span>
+              <a
+                className="flex flex-col gap-0.5 overflow-hidden rounded-xl border-2 border-foreground bg-card p-3.5 text-right shadow-[2px_2px_0_0_var(--color-foreground)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_var(--color-foreground)]"
+                href={hrefDoc(next.id)}
+              >
+                <span className="text-sm text-muted-foreground">下一篇 →</span>
                 <strong>{next.title}</strong>
               </a>
             ) : (
@@ -131,18 +150,23 @@ function DocPage({ id }: { id: string }) {
           </nav>
         </article>
 
-        <aside className="doc-toc">
+        <aside className="sticky top-20 hidden max-h-[calc(100vh-6.5rem)] overflow-y-auto text-sm lg:block">
           {headings.length > 0 && (
             <>
-              <p className="side-title">本頁目錄</p>
+              <p className="m-0 mb-2 font-mono text-xs font-bold tracking-wider text-muted-foreground uppercase">本頁目錄</p>
               {buildReactToc(headings)}
             </>
           )}
-          <p className="side-title toc-gap">所在分類</p>
-          <ul className="cat-links">
+          <p className="m-0 mt-6 mb-2 font-mono text-xs font-bold tracking-wider text-muted-foreground uppercase">所在分類</p>
+          <ul className="m-0 flex flex-wrap gap-1.5 p-0">
             {doc.categories.map((segment, index) => (
-              <li key={`${segment}-${index}`}>
-                <a href={hrefCat(doc.categories.slice(0, index + 1))}>{segment}</a>
+              <li key={`${segment}-${index}`} className="list-none">
+                <a
+                  className="rounded-md border-2 border-foreground bg-secondary px-2 py-0.5 font-mono text-[11px] font-bold"
+                  href={hrefCat(doc.categories.slice(0, index + 1))}
+                >
+                  {segment}
+                </a>
               </li>
             ))}
           </ul>

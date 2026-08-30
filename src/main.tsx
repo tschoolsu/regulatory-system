@@ -12,9 +12,9 @@ function Root() {
   const route = useRoute()
   useScrollTopOnNavigate(route)
   return (
-    <div className="app-shell">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="app-main">
+      <main className="flex-1">
         <App route={route} />
       </main>
       <Footer />

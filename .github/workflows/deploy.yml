@@ -19,19 +19,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+
+      # 版本不寫在這裡——action 會讀 package.json 的 packageManager 欄位，
+      # 跟本機是同一個真相來源（同 tpass-portal 等消費端 ci.yml 慣例）。
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
 
       - name: Build
-        run: npm run build
+        run: pnpm build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
