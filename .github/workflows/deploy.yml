@@ -27,11 +27,28 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Cache OG fonts
+        uses: actions/cache@v4
+        with:
+          path: scripts/.fonts
+          key: og-fonts-${{ runner.os }}-${{ hashFiles('scripts/gen-og.mjs') }}
+          restore-keys: |
+            og-fonts-${{ runner.os }}-
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
+
+      - name: Verify OG images
+        run: |
+          count=$(find dist/og -maxdepth 1 -name '*.png' | wc -l)
+          echo "Generated OG images: $count"
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No OG preview images were generated (check the og step above / network for Google Fonts)"
+            exit 1
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
