@@ -17,9 +17,9 @@ export function siteBase(): string {
   return `${window.location.origin}${window.location.pathname.replace(/\/$/, '')}`
 }
 
-/** 某份法規的 og:image 絕對網址 */
+/** 某份法規的 og:image 絕對網址（檔名做 percent-encoding，相容 Discord 等爬蟲） */
 export function ogImageUrl(id: string): string {
-  return `${siteBase()}/og/${ogSlug(id)}.png`
+  return `${siteBase()}/og/${encodeURIComponent(ogSlug(id))}.png`
 }
 
 export function defaultOgImageUrl(): string {
