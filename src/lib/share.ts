@@ -3,20 +3,6 @@ import { folderByPath, getDoc, stats } from './docs'
 import { hrefDoc } from './router'
 import type { Route } from './router'
 
-// 色票（與 scripts/gen-og.mjs 的 C 同步，來源為 index.css 的 OKLCH tokens）
-export const PALETTE = {
-  bg: '#FBFCFC',
-  fg: '#161818',
-  card: '#FFFFFF',
-  primary: '#20A089',
-  primaryFg: '#FCFCFC',
-  primaryText: '#006857',
-  accent: '#1A8385',
-  muted: '#606363',
-  input: '#CBCECE',
-  greenBadge: '#A2ECD9',
-} as const
-
 export const SITE_TITLE = '法規系統 - 臺北市數位實驗高中第五屆學生會'
 export const SITE_DESCRIPTION =
   '學生會所有章程、校規與行政要點的線上查閱入口，內容由學生會依最新決議即時更新。'
@@ -105,11 +91,6 @@ export function metaFor(route: Route): ShareMeta {
     case 'home':
       return homeMeta()
     case 'doc': {
-      const doc = getDoc(route.id)
-      if (!doc) return homeMeta()
-      return docMeta(doc)
-    }
-    case 'share': {
       const doc = getDoc(route.id)
       if (!doc) return homeMeta()
       return docMeta(doc)

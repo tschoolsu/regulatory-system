@@ -4,7 +4,6 @@ export type Route =
   | { name: 'home' }
   | { name: 'cat'; segments: string[] }
   | { name: 'doc'; id: string }
-  | { name: 'share'; id: string }
   | { name: 'search'; query: string }
 
 export function parseHash(): Route {
@@ -21,9 +20,6 @@ export function parseHash(): Route {
   }
   if (segments[0] === 'doc' && segments.length > 1) {
     return { name: 'doc', id: segments.slice(1).join('/') }
-  }
-  if (segments[0] === 'share' && segments.length > 1) {
-    return { name: 'share', id: segments.slice(1).join('/') }
   }
   if (segments[0] === 'search') {
     const query = new URLSearchParams(queryPart ?? '').get('q') ?? ''
@@ -58,10 +54,6 @@ export function hrefCat(segments: string[]): string {
 
 export function hrefDoc(id: string): string {
   return `#/doc/${id.split('/').map((s) => encodeURIComponent(s)).join('/')}`
-}
-
-export function hrefShare(id: string): string {
-  return `#/share/${id.split('/').map((s) => encodeURIComponent(s)).join('/')}`
 }
 
 export function hrefSearch(query: string): string {
