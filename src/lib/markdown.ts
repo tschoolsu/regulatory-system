@@ -10,7 +10,10 @@ const GFM_ALERT_TONES: Record<string, string> = {
 
 /** [TOC] 語法：渲染後由前端以實際標題填入 */
 function replaceToc(body: string): string {
-  return body.replace(/^\s*\[TOC\]\s*$/gim, '<div id="md-toc" class="md-toc"></div>')
+  return body.replace(
+    /^[ \t]*\[TOC\][ \t]*$/gm,
+    '<div id="md-toc" class="md-toc"></div>\n',
+  )
 }
 
 /** GitHub 風格 > [!NOTE] 轉為樣式化提示框 */
