@@ -76,6 +76,19 @@ author: 學生會權益部   # 選填
 因為使用 `base: './'` 與 hash 路由，就算之後改回不掛自訂網域、退回 `<username>.github.io/<repo>/`
 這種子路徑，也不需要額外設定。
 
+## 社群分享預覽
+
+每個頁面都會自動帶上完整的分享 meta（`og:*`、`twitter:*`、canonical），並依目前路由即時更新 `title`、`description`、`og:image`。把法規連結貼到 **Discord**、LINE、Facebook 等平台時，會直接顯示該法規的預覽圖與標題摘要。
+
+**預覽圖（og:image）** 在建置時自動產生（`pnpm og`，`build` 指令會自動執行）：
+
+- 每一份 `regulations/**/*.md` 都會產生一張 1200×630 的 PNG，存到 `public/og/<分類>--<檔名>.png`
+- 首頁與找不到頁面使用 `public/og/default.png`
+- 卡片風格與網站一致（neobrutalism），內容包含：分類路徑、法規標題、修訂日期、提出單位、內文摘要與標籤
+- 字型會從 Google Fonts 下載並快取在 `scripts/.fonts/`（兩者皆已加入 `.gitignore`）
+
+因此把 `#/doc/...` 連結貼到 Discord 時，Discord 會直接套用對應的預覽圖，不需額外操作。
+
 ## 技術
 
 - Vite + React 19 + TypeScript

@@ -4,10 +4,62 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#20A089" />
+
+    <!-- 一般 SEO -->
     <meta
       name="description"
       content="臺北市數位實驗高級中等學校第五屆學生會 法規系統 — 線上查閱學生會章程、校規與行政要點"
     />
+
+    <!-- Open Graph（首頁預設值；進入各頁面後由 src/lib/useShareMeta.ts 依路由覆寫） -->
+    <meta property="og:site_name" content="法規系統 - 臺北市數位實驗高中第五屆學生會" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:title" content="法規系統 - 臺北市數位實驗高中第五屆學生會" />
+    <meta
+      property="og:description"
+      content="學生會所有章程、校規與行政要點的線上查閱入口，內容由學生會依最新決議即時更新。"
+    />
+    <meta property="og:image" content="og/default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:url" content="" />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="法規系統 - 臺北市數位實驗高中第五屆學生會" />
+    <meta
+      name="twitter:description"
+      content="學生會所有章程、校規與行政要點的線上查閱入口，內容由學生會依最新決議即時更新。"
+    />
+    <meta name="twitter:image" content="og/default.png" />
+
+    <link rel="canonical" href="" />
+
+    <script>
+      // 讓社群爬蟲（Discord 等）即使不執行 React 也能拿到「絕對且 percent-encoded」的預覽圖網址
+      // 先將相對網址補成絕對網址；若 hash 是 #/doc/<id>，則直接指向該法規的預覽圖
+      ;(function () {
+        try {
+          var base = window.location.origin + window.location.pathname.replace(/\/$/, '')
+          var match = (window.location.hash || '').match(/^#\/doc\/(.+)$/)
+          var image = 'og/default.png'
+          if (match) {
+            var id = decodeURIComponent(match[1]).replace(/[/\\]/g, '--')
+            image = 'og/' + encodeURIComponent(id) + '.png'
+          }
+          var absolute = base + '/' + image
+          document.querySelectorAll('meta[property="og:image"],meta[name="twitter:image"]').forEach(function (el) {
+            el.setAttribute('content', absolute)
+          })
+        } catch (err) {
+          /* 忽略，交給 useShareMeta 處理 */
+        }
+      })()
+    </script>
+
     <title>法規系統 - 臺北市數位實驗高中第五屆學生會</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

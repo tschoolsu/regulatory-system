@@ -36,7 +36,7 @@ function FolderBranch({
   const prefix = `${folder.path.join('/')}/`
   const containsActive = activeId !== undefined && (activeId.startsWith(prefix) || activeId === folder.path.join('/'))
   return (
-    <details open={containsActive || depth === 0}>
+    <details open={containsActive}>
       <summary className="tree-folder">
         <FolderIcon className="h-4 w-4" />
         <a

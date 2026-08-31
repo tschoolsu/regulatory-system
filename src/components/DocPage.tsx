@@ -16,6 +16,7 @@ function DocPage({ id }: { id: string }) {
   const doc = getDoc(id)
   const [html, setHtml] = useState('')
   const [headings, setHeadings] = useState<TocItem[]>([])
+  const [sideCollapsed, setSideCollapsed] = useState(false)
   const articleRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -92,10 +93,41 @@ function DocPage({ id }: { id: string }) {
         </div>
       </details>
 
-      <div className="mt-1 grid grid-cols-1 items-start gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_13rem] xl:grid-cols-[17.5rem_minmax(0,1fr)_14rem]">
+      <div
+        className={
+          sideCollapsed
+            ? 'mt-1 grid grid-cols-1 items-start gap-6 lg:grid-cols-[3.25rem_minmax(0,1fr)_13rem] xl:grid-cols-[3.25rem_minmax(0,1fr)_14rem]'
+            : 'mt-1 grid grid-cols-1 items-start gap-6 lg:grid-cols-[16.5rem_minmax(0,1fr)_13rem] xl:grid-cols-[17.5rem_minmax(0,1fr)_14rem]'
+        }
+      >
         <aside className="sticky top-20 hidden max-h-[calc(100vh-6.5rem)] overflow-y-auto lg:block">
-          <p className="m-0 mb-2 font-mono text-xs font-bold tracking-wider text-muted-foreground uppercase">全部法規</p>
-          <TreeNav nodes={tree} activeId={doc.id} />
+          <button
+            type="button"
+            aria-expanded={!sideCollapsed}
+            onClick={() => setSideCollapsed((collapsed) => !collapsed)}
+            className={
+              sideCollapsed
+                ? 'flex w-full flex-col items-center gap-1 border-0 bg-transparent p-2.5 text-left [font:inherit]'
+                : 'flex w-full items-center justify-between gap-1.5 border-0 bg-transparent p-0 text-left [font:inherit]'
+            }
+          >
+            <span
+              className={
+                sideCollapsed
+                  ? 'm-0 font-mono text-xs font-bold tracking-wider text-muted-foreground uppercase [writing-mode:vertical-rl]'
+                  : 'm-0 font-mono text-xs font-bold tracking-wider text-muted-foreground uppercase'
+              }
+            >
+              全部法規
+            </span>
+            <span
+              aria-hidden="true"
+              className={`shrink-0 font-mono text-base leading-none text-muted-foreground transition-transform duration-150 ${sideCollapsed ? 'rotate-180' : ''}`}
+            >
+              {sideCollapsed ? '›' : '‹'}
+            </span>
+          </button>
+          {!sideCollapsed && <TreeNav nodes={tree} activeId={doc.id} />}
         </aside>
 
         <article ref={articleRef}>
