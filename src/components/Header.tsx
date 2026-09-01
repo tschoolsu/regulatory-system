@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { Button } from 'tpass-ui'
 import { hrefHome } from '../lib/router'
-import { SearchIcon, ScaleIcon } from './Icons'
+import { SearchIcon } from './Icons'
+import PortalLink from './PortalLink'
 
 function Header() {
   const [query, setQuery] = useState('')
@@ -13,27 +15,35 @@ function Header() {
   }
 
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <a className="logo" href={hrefHome()}>
-          <span className="logo-badge">
-            <ScaleIcon className="h-5 w-5" />
-          </span>
-          <span className="logo-text">
-            法規<span className="hyphen">-</span>系統
-          </span>
-        </a>
+    <header className="sticky top-0 z-50 h-16 border-b-2 border-foreground/20 bg-background/90 backdrop-blur-md">
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+        <div className="flex shrink-0 items-center gap-3">
+          <PortalLink />
+          <a
+            className="whitespace-nowrap font-mono text-lg font-extrabold tracking-tight text-foreground"
+            href={hrefHome()}
+          >
+            T<span className="text-primary">-</span>Law
+          </a>
+        </div>
 
-        <form className="header-search" onSubmit={submit} role="search">
-          <SearchIcon className="search-glyph h-4 w-4" />
+        <form
+          className="hidden items-center gap-2 rounded-xl border-2 border-foreground bg-card px-3 py-1.5 shadow-[2px_2px_0_0_var(--color-foreground)] transition-all duration-200 focus-within:shadow-[4px_4px_0_0_var(--color-primary)] md:flex"
+          onSubmit={submit}
+          role="search"
+        >
+          <SearchIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="搜尋法規關鍵字…"
             aria-label="搜尋法規"
+            className="w-[min(20rem,60vw)] border-none bg-transparent text-sm font-medium outline-none"
           />
-          <button type="submit">搜尋</button>
+          <Button type="submit" variant="default" size="sm">
+            搜尋
+          </Button>
         </form>
       </div>
     </header>

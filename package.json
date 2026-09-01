@@ -1,16 +1,18 @@
 {
-  "name": "regulatory-system",
+  "name": "tpass-regulatory",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@10.27.0",
   "scripts": {
     "dev": "vite",
     "og": "node scripts/gen-og.mjs",
-    "build": "npm run og && tsc -b && vite build",
+    "build": "node scripts/gen-og.mjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },
   "dependencies": {
+    "highlight.js": "^11.11.1",
     "katex": "^0.18.4",
     "mermaid": "^11.17.1",
     "react": "^19.2.8",
@@ -26,17 +28,21 @@
     "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
+    "tpass-ui": "github:tschoolsu/tpass-ui#v1.0.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
     "oxlint": "^1.79.0",
     "satori": "^0.33.4",
+    "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "vite": "^8.2.2",
     "wawoff2": "^2.0.1"

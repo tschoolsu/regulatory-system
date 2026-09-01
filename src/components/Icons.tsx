@@ -57,25 +57,6 @@ export function ArrowUpRightIcon({ className }: IconProps) {
   )
 }
 
-export function ChevronRightIcon({ className }: IconProps) {
-  return (
-    <Svg className={className}>
-      <path d="m9 6 6 6-6 6" />
-    </Svg>
-  )
-}
-
-export function ScaleIcon({ className }: IconProps) {
-  return (
-    <Svg className={className}>
-      <path d="M12 3v18" />
-      <path d="M5 21h14" />
-      <path d="M12 6 5 8l-2 5a3.5 3.5 0 0 0 7 0l-2-5" />
-      <path d="M12 6l7 2 2 5a3.5 3.5 0 0 1-7 0l2-5" />
-    </Svg>
-  )
-}
-
 export function BookOpenIcon({ className }: IconProps) {
   return (
     <Svg className={className}>
@@ -105,19 +86,14 @@ export function CalendarIcon({ className }: IconProps) {
   )
 }
 
-export function TagIcon({ className }: IconProps) {
+export function LayoutGridIcon({ className }: IconProps) {
   return (
     <Svg className={className}>
-      <path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9Z" />
-      <circle cx="8" cy="8" r="1.6" />
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
     </Svg>
   )
 }
 
-export function MenuIcon({ className }: IconProps) {
-  return (
-    <Svg className={className}>
-      <path d="M4 6h16M4 12h16M4 18h16" />
-    </Svg>
-  )
-}
